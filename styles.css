@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * OXOLEGAL - HOJA DE ESTILOS PRINCIPAL (SISTEMA MODULAR)
+ * ============================================================================
+ * Este archivo centraliza e importa la arquitectura de estilos modular.
+ */
+
+@import './css/variables.css';
+@import './css/base.css';
+@import './css/components.css';
+@import './css/cards.css';
+@import './css/modals.css';
+@import './css/toast.css';
+@import './css/skeleton.css';
+@import './css/responsive.css';

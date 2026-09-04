@@ -1,0 +1,113 @@
+/**
+ * ============================================================================
+ * OXOLEGAL - MEDIA QUERIES Y RESPONSIVIDAD MOBILE-FIRST
+ * ============================================================================
+ */
+
+/* Tablets y Móviles (Menos de 768px) */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0.65rem 1rem;
+  }
+
+  .brand-title {
+    font-size: 1.1rem;
+  }
+
+  .brand-tagline {
+    display: none;
+  }
+
+  .user-name {
+    display: none; /* Dejar solo el badge del rol para ahorrar espacio */
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .toolbar-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input-wrap {
+    max-width: 100%;
+  }
+
+  .toolbar-actions {
+    justify-content: flex-end;
+  }
+
+  .toolbar-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-reset-wrap {
+    text-align: right;
+  }
+
+  .requests-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .detail-metadata-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    width: auto;
+  }
+}
+
+/* Móviles pequeños (Menos de 480px) */
+@media (max-width: 480px) {
+  .modal-card {
+    max-height: 95vh;
+  }
+
+  .modal-header {
+    padding: 1rem;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .btn {
+    padding: 0.55rem 1rem;
+    font-size: 0.825rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+  }
+
+  .metric-card {
+    padding: 0.85rem;
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* Pantallas Ultra-Anchas (> 2000px) */
+@media (min-width: 2000px) {
+  .header-container, .main-content {
+    max-width: 1800px;
+  }
+
+  .requests-grid {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+}
