@@ -1,335 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>OxoLegal - Dirección Jurídica | oxoHotel</title>
-  
-  <!-- Metadatos PWA y Navegadores Móviles -->
-  <meta name="description" content="Portal corporativo para la gestión y seguimiento de solicitudes de la Dirección Jurídica de oxoHotel.">
+
+  <link rel="icon" href="https://acabrales-oxohotel.github.io/OxoLegal/media/OxoLegal-logo.ico">
+  <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#12172B">
-  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- iOS: modo standalone al agregar a pantalla de inicio -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="OxoLegal">
-  <meta name="application-name" content="OxoLegal">
-
-  <!-- Manifiesto PWA e Iconos Corporativos -->
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/x-icon" href="media/OxoLegal-logo.ico">
-  <link rel="icon" type="image/png" sizes="192x192" href="media/OxoLegal-logo.png">
-  <link rel="apple-touch-icon" sizes="192x192" href="media/OxoLegal-logo.png">
+  <link rel="apple-touch-icon" href="https://acabrales-oxohotel.github.io/OxoLegal/media/OxoLegal-logo.png">
 
   <style>
-    * {
-      box-sizing: border-box;
+    html, body {
       margin: 0;
       padding: 0;
-    }
-
-    html, body {
-      width: 100%;
       height: 100%;
+      background: #12172B;
       overflow: hidden;
-      background-color: #12172B;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      color: #FFFFFF;
-      display: flex;
-      flex-direction: column;
     }
-
-    /* Barra de Instalación PWA Flotante */
-    .pwa-install-bar {
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      background: linear-gradient(90deg, #182038 0%, #12172B 100%);
-      border-bottom: 1px solid rgba(193, 149, 40, 0.35);
-      padding: 0.65rem 1.25rem;
-      z-index: 100;
-      flex-shrink: 0;
-      animation: slideDown 300ms cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .pwa-install-bar.visible {
-      display: flex;
-    }
-
-    @keyframes slideDown {
-      from { transform: translateY(-100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .pwa-install-info {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .pwa-install-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      object-fit: contain;
-    }
-
-    .pwa-install-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .pwa-install-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #FFFFFF;
-    }
-
-    .pwa-install-desc {
-      font-size: 0.725rem;
-      color: #CEC7C3;
-    }
-
-    .pwa-install-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .btn-install {
-      height: 36px;
-      min-height: 36px;
-      padding: 0 1rem;
-      background-color: #C19528;
-      color: #FFFFFF;
-      font-size: 0.8rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: background-color 150ms ease, transform 150ms ease;
-    }
-
-    .btn-install:hover {
-      background-color: #A88121;
-      transform: translateY(-1px);
-    }
-
-    .btn-dismiss-install {
-      background: none;
-      border: none;
-      color: #8D98A0;
-      font-size: 1.25rem;
-      line-height: 1;
-      padding: 0.25rem;
-      cursor: pointer;
-    }
-
-    .btn-dismiss-install:hover {
-      color: #FFFFFF;
-    }
-
-    /* Contenedor Iframe */
-    .app-frame-container {
-      position: relative;
-      flex: 1;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: #F8F7F5;
-    }
-
-    .app-frame {
-      width: 100%;
-      height: 100%;
-      border: none;
+    iframe {
+      border: 0;
       display: block;
-      background-color: #F8F7F5;
-    }
-
-    /* Splash Screen / Pantalla de Carga */
-    .splash-screen {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, #1E2746 0%, #12172B 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1.25rem;
-      z-index: 50;
-      transition: opacity 400ms ease, visibility 400ms ease;
-    }
-
-    .splash-screen.fade-out {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .splash-logo {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
-      animation: pulse 2s infinite ease-in-out;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-    }
-
-    .splash-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #FFFFFF;
-    }
-
-    .splash-tagline {
-      font-size: 0.85rem;
-      color: #C19528;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .splash-spinner {
-      width: 32px;
-      height: 32px;
-      border: 3px solid rgba(193, 149, 40, 0.2);
-      border-top-color: #C19528;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin-top: 0.5rem;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+      height: 100vh;   /* fallback para navegadores antiguos */
+      height: 100dvh;  /* alto de viewport dinámico para móviles */
     }
   </style>
 </head>
 <body>
-
-  <!-- BARRA DE INSTALACIÓN PWA (Visible al detectar soporte nativo) -->
-  <aside class="pwa-install-bar" id="pwa-install-bar">
-    <div class="pwa-install-info">
-      <img src="media/OxoLegal-logo.png" alt="OxoLegal" class="pwa-install-icon" onerror="this.src='https://raw.githubusercontent.com/acabrales-oxohotel/OxoLegal/main/media/OxoLegal-logo.png'">
-      <div class="pwa-install-text">
-        <span class="pwa-install-title">OxoLegal - oxoHotel</span>
-        <span class="pwa-install-desc">Instalar aplicación en este dispositivo</span>
-      </div>
-    </div>
-    <div class="pwa-install-actions">
-      <button type="button" class="btn-install" id="btn-pwa-install">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-        <span>Instalar</span>
-      </button>
-      <button type="button" class="btn-dismiss-install" id="btn-dismiss-install" title="Cerrar">&times;</button>
-    </div>
-  </aside>
-
-  <!-- CONTENEDOR PRINCIPAL CON IFRAME DE GOOGLE APPS SCRIPT -->
-  <main class="app-frame-container">
-    <!-- PANTALLA DE CARGA CORPORATIVA -->
-    <div class="splash-screen" id="splash-screen">
-      <img 
-        src="media/OxoLegal-logo.png" 
-        alt="Logo OxoLegal" 
-        class="splash-logo" 
-        onerror="this.src='https://raw.githubusercontent.com/acabrales-oxohotel/OxoLegal/main/media/OxoLegal-logo.png'"
-      >
-      <h1 class="splash-title">OxoLegal</h1>
-      <span class="splash-tagline">Dirección Jurídica &middot; oxoHotel</span>
-      <div class="splash-spinner"></div>
-    </div>
-
-    <!-- IFRAME DEL WEB APP DE GOOGLE APPS SCRIPT -->
-    <iframe 
-      id="oxolegal-frame"
-      class="app-frame"
-      src="https://script.google.com/a/macros/oxohotel.com/s/AKfycbxaBFrZro-3DowLzEWrfm46G07-eQa5R2MCGTGKF-PjXaoyQWDHT_cbZtpB_QbZOszc/exec"
-      allow="clipboard-write; camera; geolocation; microphone"
-      title="OxoLegal Portal"
-    ></iframe>
-  </main>
+  <iframe 
+    src="https://script.google.com/a/macros/oxohotel.com/s/AKfycbxaBFrZro-3DowLzEWrfm46G07-eQa5R2MCGTGKF-PjXaoyQWDHT_cbZtpB_QbZOszc/exec" 
+    allow="clipboard-write; camera; geolocation"
+  ></iframe>
 
   <script>
-    // Gestión del Splash Screen con desvanecimiento suave al cargar el iframe
-    const frame = document.getElementById('oxolegal-frame');
-    const splash = document.getElementById('splash-screen');
-
-    if (frame && splash) {
-      frame.addEventListener('load', () => {
-        setTimeout(() => {
-          splash.classList.add('fade-out');
-        }, 300);
-      });
-
-      // Timeout de seguridad por si la red retrasa el evento load
-      setTimeout(() => {
-        if (!splash.classList.contains('fade-out')) {
-          splash.classList.add('fade-out');
-        }
-      }, 5000);
-    }
-
-    // Registro de Service Worker para PWA Instalable
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js', { scope: './' })
-          .then((reg) => console.log('[PWA] Service Worker activo con scope:', reg.scope))
-          .catch((err) => console.warn('[PWA] Error en Service Worker:', err));
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
       });
     }
-
-    // Captura del evento beforeinstallprompt para instalación nativa
-    let pwaInstallPrompt = null;
-    const installBar = document.getElementById('pwa-install-bar');
-    const installBtn = document.getElementById('btn-pwa-install');
-    const dismissBtn = document.getElementById('btn-dismiss-install');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      pwaInstallPrompt = e;
-      console.log('[PWA] Evento beforeinstallprompt capturado en contenedor PWA.');
-      if (installBar) installBar.classList.add('visible');
-    });
-
-    if (installBtn) {
-      installBtn.addEventListener('click', async () => {
-        if (!pwaInstallPrompt) return;
-        pwaInstallPrompt.prompt();
-        const choice = await pwaInstallPrompt.userChoice;
-        console.log('[PWA] Elección del usuario:', choice.outcome);
-        pwaInstallPrompt = null;
-        if (installBar) installBar.classList.remove('visible');
-      });
-    }
-
-    if (dismissBtn) {
-      dismissBtn.addEventListener('click', () => {
-        if (installBar) installBar.classList.remove('visible');
-      });
-    }
-
-    window.addEventListener('appinstalled', () => {
-      console.log('[PWA] OxoLegal instalado satisfactoriamente.');
-      pwaInstallPrompt = null;
-      if (installBar) installBar.classList.remove('visible');
-    });
   </script>
-
 </body>
 </html>
