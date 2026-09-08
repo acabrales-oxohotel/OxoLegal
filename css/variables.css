@@ -1,59 +1,81 @@
 /**
  * ============================================================================
- * OXOLEGAL - VARIABLES Y SISTEMA DE DISEÑO (TECHNO-MINIMALISTA)
+ * OXOLEGAL - VARIABLES Y SISTEMA DE DISEÑO (IDENTIDAD CORPORATIVA OXOHOTEL)
  * ============================================================================
+ * CROMÁTICA OFICIAL OXOHOTEL:
+ * - Colorimetría del Logo:
+ *   --color-logo-dark: #606060 (Gris oscuro grafito)
+ *   --color-logo-light: #dddddd (Gris claro)
+ * - Colorimetría de la Marca:
+ *   --color-brand-silver: #c6c6c6 (Gris plata / intermedio)
+ *   --color-brand-sand: #cec7c3 (Greige cálido / arena corporativa)
+ *   --color-brand-green: #5f6d5f (Verde salvia / olivo corporativo)
+ *   --color-brand-blue: #49677a (Azul pizarra / petróleo corporativo)
+ *   --color-brand-gold: #c19528 (Dorado / ocre corporativo de oxoHotel)
  */
 
 :root {
-  /* Paleta Primaria Corporativa */
-  --color-primary: #0F172A;
-  --color-primary-hover: #1E293B;
-  --color-accent: #D97706; /* Ámbar Corporativo / Dorado Oxo */
-  --color-accent-hover: #B45309;
+  /* Paleta Corporativa OxoHotel */
+  --color-primary: #49677a;           /* Azul Pizarra Corporativo OxoHotel */
+  --color-primary-hover: #3a5364;     /* Azul profundo para hover */
+  --color-primary-active: #2f4453;
+  --color-primary-subtle: rgba(73, 103, 122, 0.12);
+
+  --color-accent: #c19528;            /* Dorado Corporativo OxoHotel */
+  --color-accent-hover: #a88121;      /* Dorado profundo para hover */
+  --color-accent-active: #8f6d19;
+  --color-accent-subtle: rgba(193, 149, 40, 0.12);
+  --color-accent-border: rgba(193, 149, 40, 0.35);
+
+  --color-brand-green: #5f6d5f;       /* Verde Salvia Corporativo OxoHotel */
+  --color-brand-sand: #cec7c3;        /* Greige Arena Corporativo OxoHotel */
+  --color-brand-silver: #c6c6c6;      /* Gris Plata Corporativo OxoHotel */
+  --color-brand-graphite: #606060;    /* Gris Grafito Logo OxoHotel */
+  --color-brand-lightgray: #dddddd;   /* Gris Suave Logo OxoHotel */
 
   /* Fondos y Superficies (Modo Claro) */
-  --color-bg: #F8FAFC;
-  --color-surface: #FFFFFF;
-  --color-surface-hover: #F1F5F9;
-  --color-surface-alt: #F1F5F9;
+  --color-bg: #f8f7f5;               /* Fondo cálido sofisticado hotelero */
+  --color-surface: #ffffff;
+  --color-surface-hover: #f3f1ee;
+  --color-surface-alt: #f1efec;
 
   /* Textos */
-  --color-text: #0F172A;
-  --color-text-muted: #64748B;
-  --color-text-light: #94A3B8;
-  --color-text-inverse: #FFFFFF;
+  --color-text: #263238;              /* Gris carbón pizarra corporativo */
+  --color-text-muted: #606060;        /* Gris grafito oficial del logo */
+  --color-text-light: #8d98a0;        /* Gris pizarra claro */
+  --color-text-inverse: #ffffff;
 
   /* Bordes y Líneas Divisorias */
-  --color-border: #E2E8F0;
-  --color-border-hover: #CBD5E1;
-  --color-divider: #EDF2F7;
+  --color-border: #ded9d4;            /* Matiz cálido derivado de #cec7c3 */
+  --color-border-hover: #c6c6c6;      /* Gris de marca */
+  --color-divider: #ebe7e3;
 
   /* Estados Funcionales (Badges) */
-  --badge-pending-bg: rgba(217, 119, 6, 0.12);
-  --badge-pending-text: #B45309;
-  --badge-pending-border: rgba(217, 119, 6, 0.28);
+  --badge-pending-bg: rgba(193, 149, 40, 0.14);
+  --badge-pending-text: #967219;
+  --badge-pending-border: rgba(193, 149, 40, 0.35);
 
-  --badge-review-bg: rgba(37, 99, 235, 0.12);
-  --badge-review-text: #1D4ED8;
-  --badge-review-border: rgba(37, 99, 235, 0.28);
+  --badge-review-bg: rgba(73, 103, 122, 0.14);
+  --badge-review-text: #3e5868;
+  --badge-review-border: rgba(73, 103, 122, 0.35);
 
-  --badge-approved-bg: rgba(13, 148, 136, 0.12);
-  --badge-approved-text: #0F766E;
-  --badge-approved-border: rgba(13, 148, 136, 0.28);
+  --badge-approved-bg: rgba(95, 109, 95, 0.14);
+  --badge-approved-text: #4b584b;
+  --badge-approved-border: rgba(95, 109, 95, 0.35);
 
-  --badge-rejected-bg: rgba(220, 38, 38, 0.12);
-  --badge-rejected-text: #B91C1C;
-  --badge-rejected-border: rgba(220, 38, 38, 0.28);
+  --badge-rejected-bg: rgba(185, 40, 40, 0.12);
+  --badge-rejected-text: #a82020;
+  --badge-rejected-border: rgba(185, 40, 40, 0.30);
 
-  --badge-resolved-bg: rgba(5, 150, 105, 0.12);
-  --badge-resolved-text: #047857;
-  --badge-resolved-border: rgba(5, 150, 105, 0.28);
+  --badge-resolved-bg: rgba(95, 109, 95, 0.16);
+  --badge-resolved-text: #3c493c;
+  --badge-resolved-border: rgba(95, 109, 95, 0.38);
 
   /* Sombras y Elevaciones */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-sm: 0 1px 2px 0 rgba(73, 103, 122, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(73, 103, 122, 0.08), 0 2px 4px -2px rgba(73, 103, 122, 0.04);
+  --shadow-lg: 0 10px 18px -3px rgba(73, 103, 122, 0.10), 0 4px 6px -4px rgba(73, 103, 122, 0.05);
+  --shadow-modal: 0 25px 50px -12px rgba(18, 23, 43, 0.30);
 
   /* Radios de Borde */
   --radius-sm: 6px;
@@ -67,48 +89,54 @@
 }
 
 /* ==========================================================================
-   MODO OSCURO (TECHNO-MINIMALISTA)
+   MODO OSCURO (OXOHOTEL PRESTIGE DARK)
    ========================================================================== */
 [data-theme="dark"] {
-  --color-primary: #0F172A;
-  --color-primary-hover: #1E293B;
-  --color-accent: #F59E0B;
-  --color-accent-hover: #D97706;
+  --color-primary: #5c7f96;
+  --color-primary-hover: #49677a;
+  --color-primary-active: #3a5364;
+  --color-primary-subtle: rgba(92, 127, 150, 0.20);
 
-  --color-bg: #0B1120;
-  --color-surface: #131E32;
-  --color-surface-hover: #1A2942;
-  --color-surface-alt: #1E293B;
+  --color-accent: #d8af41;            /* Dorado más luminoso para fondos oscuros */
+  --color-accent-hover: #c19528;
+  --color-accent-active: #a88121;
+  --color-accent-subtle: rgba(216, 175, 65, 0.18);
+  --color-accent-border: rgba(216, 175, 65, 0.45);
 
-  --color-text: #F8FAFC;
-  --color-text-muted: #94A3B8;
-  --color-text-light: #64748B;
-  --color-text-inverse: #0F172A;
+  --color-bg: #12172B;                /* Fondo oscuro corporativo */
+  --color-surface: #182038;           /* Superficie azul noche slate */
+  --color-surface-hover: #212c4d;
+  --color-surface-alt: #1c2642;
 
-  --color-border: #1E293B;
-  --color-border-hover: #334155;
-  --color-divider: #1E293B;
+  --color-text: #f4f6f8;
+  --color-text-muted: #c6c6c6;        /* Gris plata oficial */
+  --color-text-light: #8d98a0;
+  --color-text-inverse: #12172B;
+
+  --color-border: #263352;
+  --color-border-hover: #3b4d75;
+  --color-divider: #202b45;
 
   /* Badges en Modo Oscuro */
-  --badge-pending-bg: rgba(245, 158, 11, 0.18);
-  --badge-pending-text: #FCD34D;
-  --badge-pending-border: rgba(245, 158, 11, 0.4);
+  --badge-pending-bg: rgba(216, 175, 65, 0.18);
+  --badge-pending-text: #edd187;
+  --badge-pending-border: rgba(216, 175, 65, 0.40);
 
-  --badge-review-bg: rgba(59, 130, 246, 0.18);
-  --badge-review-text: #93C5FD;
-  --badge-review-border: rgba(59, 130, 246, 0.4);
+  --badge-review-bg: rgba(92, 127, 150, 0.20);
+  --badge-review-text: #b1cbe0;
+  --badge-review-border: rgba(92, 127, 150, 0.45);
 
-  --badge-approved-bg: rgba(20, 184, 166, 0.18);
-  --badge-approved-text: #5EEAD4;
-  --badge-approved-border: rgba(20, 184, 166, 0.4);
+  --badge-approved-bg: rgba(95, 109, 95, 0.22);
+  --badge-approved-text: #a8baa8;
+  --badge-approved-border: rgba(95, 109, 95, 0.45);
 
   --badge-rejected-bg: rgba(239, 68, 68, 0.18);
-  --badge-rejected-text: #FCA5A5;
-  --badge-rejected-border: rgba(239, 68, 68, 0.4);
+  --badge-rejected-text: #fca5a5;
+  --badge-rejected-border: rgba(239, 68, 68, 0.40);
 
-  --badge-resolved-bg: rgba(16, 185, 129, 0.18);
-  --badge-resolved-text: #6EE7B7;
-  --badge-resolved-border: rgba(16, 185, 129, 0.4);
+  --badge-resolved-bg: rgba(95, 109, 95, 0.24);
+  --badge-resolved-text: #b7cab7;
+  --badge-resolved-border: rgba(95, 109, 95, 0.48);
 
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);

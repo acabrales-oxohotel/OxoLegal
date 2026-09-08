@@ -1,26 +1,31 @@
 {
-  "name": "OxoLegal Desk",
+  "name": "OxoLegal - Dirección Jurídica | oxoHotel",
   "short_name": "OxoLegal",
-  "description": "Portal corporativo para la gestión de solicitudes de la dirección jurídica de oxoHotel.",
-  "start_url": "./index.html",
+  "description": "Portal corporativo para la gestión de solicitudes de la Dirección Jurídica de oxoHotel.",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "any",
-  "background_color": "#0B1120",
-  "theme_color": "#0B1120",
-  "categories": ["business", "productivity"],
+  "orientation": "portrait-primary",
+  "background_color": "#12172B",
+  "theme_color": "#12172B",
   "icons": [
     {
       "src": "media/OxoLegal-logo.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "media/OxoLegal-logo.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "media/OxoLegal-logo.png",
+      "sizes": "499x499",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

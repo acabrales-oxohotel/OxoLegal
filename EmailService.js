@@ -22,13 +22,13 @@ function notificar(tipo, datos) {
   if (destinatarios.length === 0) return;
 
   const toList = destinatarios.join(',');
-  let badgeColor = '#2563EB'; // Azul primario
+  let badgeColor = '#49677a'; // Azul pizarra corporativo OxoHotel
   let badgeText = datos.estado || ESTADOS.PENDIENTE;
 
-  if (datos.estado === ESTADOS.RESUELTO) badgeColor = '#059669'; // Verde
-  else if (datos.estado === ESTADOS.EN_REVISION) badgeColor = '#D97706'; // Ámbar
-  else if (datos.estado === ESTADOS.RECHAZADO) badgeColor = '#DC2626'; // Rojo
-  else if (datos.estado === ESTADOS.APROBADO) badgeColor = '#0D9488'; // Verde azulado
+  if (datos.estado === ESTADOS.RESUELTO) badgeColor = '#5f6d5f'; // Verde salvia OxoHotel
+  else if (datos.estado === ESTADOS.EN_REVISION) badgeColor = '#c19528'; // Dorado OxoHotel
+  else if (datos.estado === ESTADOS.RECHAZADO) badgeColor = '#B91C1C'; // Rojo
+  else if (datos.estado === ESTADOS.APROBADO) badgeColor = '#5f6d5f'; // Verde salvia OxoHotel
 
   let asuntoCorreo = '';
   let cuerpoTitulo = '';
@@ -50,22 +50,22 @@ function notificar(tipo, datos) {
     <head>
       <meta charset="utf-8">
       <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0F172A; margin: 0; padding: 24px; color: #1E293B; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #12172B; margin: 0; padding: 24px; color: #1E293B; }
         .container { max-width: 600px; margin: 0 auto; background: #FFFFFF; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 1px solid #E2E8F0; }
-        .header { background: #0B1120; padding: 28px; text-align: center; border-bottom: 2px solid #D97706; }
+        .header { background: #12172B; padding: 28px; text-align: center; border-bottom: 3px solid #c19528; }
         .logo-title { color: #F8FAFC; font-size: 24px; font-weight: 700; letter-spacing: 0.5px; margin: 0; }
-        .logo-sub { color: #94A3B8; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; }
+        .logo-sub { color: #c19528; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; font-weight: 600; }
         .content { padding: 32px 28px; }
-        .headline { font-size: 18px; font-weight: 600; color: #0F172A; margin-bottom: 8px; }
-        .subtext { font-size: 14px; color: #64748B; margin-bottom: 24px; line-height: 1.5; }
-        .card-details { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 20px; margin-bottom: 24px; }
-        .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #EDF2F7; font-size: 14px; }
-        .detail-label { font-weight: 600; color: #475569; width: 35%; }
-        .detail-val { color: #0F172A; width: 65%; word-break: break-word; }
+        .headline { font-size: 18px; font-weight: 600; color: #263238; margin-bottom: 8px; }
+        .subtext { font-size: 14px; color: #606060; margin-bottom: 24px; line-height: 1.5; }
+        .card-details { background: #f8f7f5; border: 1px solid #ded9d4; border-radius: 8px; padding: 20px; margin-bottom: 24px; }
+        .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #ebe7e3; font-size: 14px; }
+        .detail-label { font-weight: 600; color: #49677a; width: 35%; }
+        .detail-val { color: #263238; width: 65%; word-break: break-word; }
         .badge { display: inline-block; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; color: #FFFFFF; background-color: ${badgeColor}; }
-        .desc-box { margin-top: 16px; padding: 14px; background: #FFFFFF; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 13px; color: #334155; line-height: 1.6; }
-        .footer { background: #F1F5F9; padding: 20px 28px; text-align: center; font-size: 12px; color: #64748B; border-top: 1px solid #E2E8F0; }
-        .btn { display: inline-block; padding: 12px 24px; background: #0B1120; color: #FFFFFF !important; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; margin-top: 16px; border: 1px solid #D97706; }
+        .desc-box { margin-top: 16px; padding: 14px; background: #FFFFFF; border-radius: 6px; border: 1px solid #ded9d4; font-size: 13px; color: #263238; line-height: 1.6; }
+        .footer { background: #f8f7f5; padding: 20px 28px; text-align: center; font-size: 12px; color: #606060; border-top: 1px solid #ded9d4; }
+        .btn { display: inline-block; padding: 12px 24px; background: #c19528; color: #FFFFFF !important; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; margin-top: 16px; }
       </style>
     </head>
     <body>

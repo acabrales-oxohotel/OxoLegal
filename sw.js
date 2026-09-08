@@ -7,7 +7,7 @@
  * - Estrategia Network First (con fallback a caché) para consultas a la API de GAS.
  */
 
-const CACHE_NAME = 'oxolegal-core-v1';
+const CACHE_NAME = 'oxolegal-core-v3';
 
 // Recursos esenciales que se precargan durante la instalación
 const STATIC_ASSETS = [
@@ -36,14 +36,20 @@ const STATIC_ASSETS = [
 
 /**
  * Evento 'install':
- * Abre la caché y guarda todos los archivos estáticos requeridos para uso offline.
+ * Abre la caché y precarga los archivos esenciales con tolerancia a fallos.
  */
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('[SW] Precargando assets estáticos en la caché:', CACHE_NAME);
-        return cache.addAll(STATIC_ASSETS);
+        return Promise.allSettled(
+          STATIC_ASSETS.map((asset) =>
+            cache.add(asset).catch((err) => {
+              console.warn('[SW] Aviso al precargar recurso individual:', asset, err);
+            })
+          )
+        );
       })
       .then(() => self.skipWaiting())
       .catch((error) => {
