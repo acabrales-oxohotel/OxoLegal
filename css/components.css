@@ -15,30 +15,37 @@
   font-family: inherit;
   font-size: 0.875rem;
   font-weight: 600;
-  padding: 0.6rem 1.25rem;
+  height: var(--height-control, 42px);
+  min-height: var(--height-control, 42px);
+  max-height: var(--height-control, 42px);
+  padding: 0 1.25rem;
   border-radius: var(--radius-md);
   border: 1px solid transparent;
   cursor: pointer;
   transition: all var(--transition-fast);
   white-space: nowrap;
   user-select: none;
+  box-sizing: border-box;
+  line-height: 1;
 }
 
 .btn-primary {
   background-color: var(--color-accent);
   color: #FFFFFF;
+  border-color: var(--color-accent);
   box-shadow: 0 1px 3px var(--color-accent-subtle);
 }
 
 .btn-primary:hover {
   background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
   transform: translateY(-1px);
 }
 
 .btn-secondary {
   background-color: var(--color-surface);
   color: var(--color-text);
-  border-color: var(--color-border);
+  border: 1px solid var(--color-border);
 }
 
 .btn-secondary:hover {
@@ -46,28 +53,55 @@
   border-color: var(--color-border-hover);
 }
 
+.btn-danger {
+  background-color: #DC2626;
+  color: #FFFFFF;
+  border-color: #DC2626;
+}
+
+.btn-danger:hover {
+  background-color: #B91C1C;
+  border-color: #B91C1C;
+}
+
 .btn-block {
   width: 100%;
 }
 
 .btn-sm {
-  padding: 0.4rem 0.85rem;
+  height: var(--height-control-sm, 34px);
+  min-height: var(--height-control-sm, 34px);
+  max-height: var(--height-control-sm, 34px);
+  padding: 0 0.85rem;
   font-size: 0.8rem;
   border-radius: var(--radius-sm);
+  box-sizing: border-box;
 }
 
 .btn-icon-only {
+  width: var(--height-control, 42px);
+  height: var(--height-control, 42px);
+  min-width: var(--height-control, 42px);
+  min-height: var(--height-control, 42px);
+  max-width: var(--height-control, 42px);
+  max-height: var(--height-control, 42px);
   background-color: var(--color-surface);
   color: var(--color-text-muted);
   border: 1px solid var(--color-border);
-  padding: 0.55rem;
+  padding: 0;
   border-radius: var(--radius-md);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  box-sizing: border-box;
 }
 
 .btn-icon-only:hover {
   color: var(--color-text);
   background-color: var(--color-surface-hover);
+  border-color: var(--color-border-hover);
 }
 
 .btn-text-muted {
@@ -79,6 +113,8 @@
   cursor: pointer;
   text-decoration: underline;
   padding: 0.25rem 0.5rem;
+  height: auto;
+  min-height: auto;
 }
 
 .btn-text-muted:hover {
@@ -89,14 +125,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: var(--height-control, 42px);
+  height: var(--height-control, 42px);
+  min-width: var(--height-control, 42px);
+  min-height: var(--height-control, 42px);
+  max-width: var(--height-control, 42px);
+  max-height: var(--height-control, 42px);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   background-color: var(--color-surface);
   color: var(--color-text);
   cursor: pointer;
   transition: all var(--transition-fast);
+  box-sizing: border-box;
+  padding: 0;
 }
 
 .icon-btn:hover {
@@ -215,16 +257,32 @@
   color: var(--color-text-muted);
 }
 
-.form-input, .form-textarea, .filter-select {
+.form-input, .filter-select {
   font-family: inherit;
   font-size: 0.875rem;
-  padding: 0.65rem 0.85rem;
+  height: var(--height-control, 42px);
+  min-height: var(--height-control, 42px);
+  max-height: var(--height-control, 42px);
+  padding: 0 0.85rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   background-color: var(--color-surface);
   color: var(--color-text);
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
   width: 100%;
+  box-sizing: border-box;
+  line-height: 1.2;
+}
+
+.filter-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23606060' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 14px;
+  padding-right: 2.2rem;
+  cursor: pointer;
 }
 
 .form-input:focus, .form-textarea:focus, .filter-select:focus {
@@ -234,14 +292,25 @@
 }
 
 .form-textarea {
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  width: 100%;
   resize: vertical;
   min-height: 90px;
+  box-sizing: border-box;
 }
 
 .input-icon-wrap {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .input-icon {
@@ -340,7 +409,16 @@
 .add-catalog-form {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
   margin-bottom: 1rem;
+}
+
+.add-catalog-form .form-input {
+  flex: 1;
+}
+
+.add-catalog-form .btn {
+  flex-shrink: 0;
 }
 
 .catalog-list {

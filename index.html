@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="light">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>OxoLegal - Portal de Solicitudes Dirección Jurídica | oxoHotel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>OxoLegal - Dirección Jurídica | oxoHotel</title>
   
   <!-- Metadatos PWA y Navegadores Móviles -->
-  <meta name="description" content="Portal corporativo para la gestión y seguimiento de solicitudes de la dirección jurídica de oxoHotel.">
+  <meta name="description" content="Portal corporativo para la gestión y seguimiento de solicitudes de la Dirección Jurídica de oxoHotel.">
   <meta name="theme-color" content="#12172B">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,515 +20,272 @@
   <link rel="icon" type="image/png" sizes="192x192" href="media/OxoLegal-logo.png">
   <link rel="apple-touch-icon" sizes="192x192" href="media/OxoLegal-logo.png">
 
-  <!-- Hojas de Estilo para GitHub Pages (PWA) -->
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  <!-- Estilos Modulares para Google Apps Script -->
-  <?!= include('css_variables'); ?>
-  <?!= include('css_base'); ?>
-  <?!= include('css_components'); ?>
-  <?!= include('css_cards'); ?>
-  <?!= include('css_modals'); ?>
-  <?!= include('css_toast'); ?>
-  <?!= include('css_skeleton'); ?>
-  <?!= include('css_responsive'); ?>
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #12172B;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Barra de Instalación PWA Flotante */
+    .pwa-install-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: linear-gradient(90deg, #182038 0%, #12172B 100%);
+      border-bottom: 1px solid rgba(193, 149, 40, 0.35);
+      padding: 0.65rem 1.25rem;
+      z-index: 100;
+      flex-shrink: 0;
+      animation: slideDown 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pwa-install-bar.visible {
+      display: flex;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .pwa-install-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .pwa-install-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .pwa-install-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pwa-install-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .pwa-install-desc {
+      font-size: 0.725rem;
+      color: #CEC7C3;
+    }
+
+    .pwa-install-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-install {
+      height: 36px;
+      min-height: 36px;
+      padding: 0 1rem;
+      background-color: #C19528;
+      color: #FFFFFF;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background-color 150ms ease, transform 150ms ease;
+    }
+
+    .btn-install:hover {
+      background-color: #A88121;
+      transform: translateY(-1px);
+    }
+
+    .btn-dismiss-install {
+      background: none;
+      border: none;
+      color: #8D98A0;
+      font-size: 1.25rem;
+      line-height: 1;
+      padding: 0.25rem;
+      cursor: pointer;
+    }
+
+    .btn-dismiss-install:hover {
+      color: #FFFFFF;
+    }
+
+    /* Contenedor Iframe */
+    .app-frame-container {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #F8F7F5;
+    }
+
+    .app-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background-color: #F8F7F5;
+    }
+
+    /* Splash Screen / Pantalla de Carga */
+    .splash-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #1E2746 0%, #12172B 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      z-index: 50;
+      transition: opacity 400ms ease, visibility 400ms ease;
+    }
+
+    .splash-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+
+    .splash-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+    }
+
+    .splash-tagline {
+      font-size: 0.85rem;
+      color: #C19528;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .splash-spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid rgba(193, 149, 40, 0.2);
+      border-top-color: #C19528;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-top: 0.5rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ENCABEZADO CORPORATIVO -->
-  <header class="app-header" id="app-header">
-    <div class="header-container">
-      <div class="brand-group">
-        <img 
-          src="media/OxoLegal-logo.png" 
-          alt="Logo OxoLegal" 
-          class="brand-logo" 
-          width="38" 
-          height="38"
-        >
-        <div class="brand-text">
-          <span class="brand-title">OxoLegal</span>
-          <span class="brand-tagline">Dirección Jurídica</span>
-        </div>
-      </div>
-
-      <div class="header-actions">
-        <!-- Perfil de usuario (visible tras login) -->
-        <div class="user-pill hidden" id="user-pill">
-          <span class="user-name" id="user-display-name">Usuario</span>
-          <span class="badge user-role-badge" id="user-display-role">Rol</span>
-        </div>
-
-        <!-- Botón Instalar App PWA (visible cuando el navegador soporte instalación) -->
-        <button type="button" class="icon-btn hidden" id="btn-pwa-install" title="Instalar Aplicación OxoLegal" aria-label="Instalar app">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-        </button>
-
-        <!-- Botón Configuración API GAS -->
-        <button type="button" class="icon-btn" id="btn-open-api-config" title="Configurar conexión API">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-          </svg>
-        </button>
-
-        <!-- Toggle Modo Claro / Oscuro -->
-        <button type="button" class="icon-btn" id="theme-toggle-btn" title="Alternar tema de color" aria-label="Cambiar tema">
-          <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <svg class="moon-icon hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
-
-        <!-- Botón de Cerrar Sesión -->
-        <button type="button" class="icon-btn hidden" id="logout-btn" title="Cerrar Sesión" aria-label="Cerrar sesión">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-            <polyline points="16 17 21 12 16 7"></polyline>
-            <line x1="21" y1="12" x2="9" y2="12"></line>
-          </svg>
-        </button>
+  <!-- BARRA DE INSTALACIÓN PWA (Visible al detectar soporte nativo) -->
+  <aside class="pwa-install-bar" id="pwa-install-bar">
+    <div class="pwa-install-info">
+      <img src="media/OxoLegal-logo.png" alt="OxoLegal" class="pwa-install-icon" onerror="this.src='https://raw.githubusercontent.com/acabrales-oxohotel/OxoLegal/main/media/OxoLegal-logo.png'">
+      <div class="pwa-install-text">
+        <span class="pwa-install-title">OxoLegal - oxoHotel</span>
+        <span class="pwa-install-desc">Instalar aplicación en este dispositivo</span>
       </div>
     </div>
-  </header>
+    <div class="pwa-install-actions">
+      <button type="button" class="btn-install" id="btn-pwa-install">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>Instalar</span>
+      </button>
+      <button type="button" class="btn-dismiss-install" id="btn-dismiss-install" title="Cerrar">&times;</button>
+    </div>
+  </aside>
 
-  <!-- CONTENEDOR PRINCIPAL DINÁMICO -->
-  <main class="main-content" id="main-content">
+  <!-- CONTENEDOR PRINCIPAL CON IFRAME DE GOOGLE APPS SCRIPT -->
+  <main class="app-frame-container">
+    <!-- PANTALLA DE CARGA CORPORATIVA -->
+    <div class="splash-screen" id="splash-screen">
+      <img 
+        src="media/OxoLegal-logo.png" 
+        alt="Logo OxoLegal" 
+        class="splash-logo" 
+        onerror="this.src='https://raw.githubusercontent.com/acabrales-oxohotel/OxoLegal/main/media/OxoLegal-logo.png'"
+      >
+      <h1 class="splash-title">OxoLegal</h1>
+      <span class="splash-tagline">Dirección Jurídica &middot; oxoHotel</span>
+      <div class="splash-spinner"></div>
+    </div>
 
-    <!-- ========================================== -->
-    <!-- VISTA 1: AUTENTICACIÓN (LOGIN)              -->
-    <!-- ========================================== -->
-    <section class="auth-view" id="auth-view">
-      <div class="auth-card">
-        <div class="auth-logo-wrap">
-          <img 
-            src="media/OxoLegal-logo.png" 
-            alt="OxoLegal Logo" 
-            class="auth-logo" 
-            width="64" 
-            height="64"
-          >
-        </div>
-        <h1 class="auth-title">Portal OxoLegal</h1>
-        <p class="auth-subtitle">Gestión centralizada de solicitudes de la Dirección Jurídica</p>
-
-        <form id="login-form" class="auth-form" novalidate>
-          <div class="form-group">
-            <label for="login-email" class="form-label">Correo Electrónico Corporativo</label>
-            <div class="input-icon-wrap">
-              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              <input 
-                type="email" 
-                id="login-email" 
-                class="form-input" 
-                placeholder="ej. alljuridico@oxohotel.com" 
-                autocomplete="email"
-                required
-              >
-            </div>
-            <span class="form-hint">Ingrese el correo registrado en la base de datos de usuarios.</span>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-block" id="btn-login-submit">
-            <span class="btn-text">Ingresar al Portal</span>
-            <span class="btn-spinner hidden" id="login-spinner"></span>
-          </button>
-        </form>
-
-        <div class="auth-footer-notice">
-          <p>Los permisos de visualización y gestión se determinan automáticamente según su rol (Administrador o Usuario asignado).</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- VISTA 2: DASHBOARD PRINCIPAL               -->
-    <!-- ========================================== -->
-    <section class="dashboard-view hidden" id="dashboard-view">
-
-      <!-- Métricas y Estadísticas Rápidas -->
-      <div class="metrics-grid" id="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-label">Total Solicitudes</div>
-          <div class="metric-value" id="metric-total">0</div>
-          <div class="metric-indicator bg-primary"></div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Pendientes</div>
-          <div class="metric-value" id="metric-pending">0</div>
-          <div class="metric-indicator bg-warning"></div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">En Revisión</div>
-          <div class="metric-value" id="metric-review">0</div>
-          <div class="metric-indicator bg-info"></div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Resueltas / Aprobadas</div>
-          <div class="metric-value" id="metric-resolved">0</div>
-          <div class="metric-indicator bg-success"></div>
-        </div>
-      </div>
-
-      <!-- Barra de Herramientas y Filtros -->
-      <div class="toolbar-card">
-        <div class="toolbar-top">
-          <!-- Búsqueda en tiempo real -->
-          <div class="search-input-wrap">
-            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input 
-              type="text" 
-              id="filter-search" 
-              class="search-input" 
-              placeholder="Buscar por ID, asunto, hotel o descripción..."
-            >
-          </div>
-
-          <!-- Acciones de Administrador -->
-          <div class="toolbar-actions" id="admin-actions-bar">
-            <button type="button" class="btn btn-secondary hidden" id="btn-open-catalogs" title="Configurar Hoteles y Etiquetas">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                <polyline points="2 17 12 22 22 17"></polyline>
-                <polyline points="2 12 12 17 22 12"></polyline>
-              </svg>
-              <span>Catálogos</span>
-            </button>
-
-            <button type="button" class="btn btn-primary hidden" id="btn-open-new-request">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              <span>Nueva Solicitud</span>
-            </button>
-
-            <button type="button" class="btn btn-icon-only" id="btn-refresh-data" title="Actualizar datos">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M23 4v6h-6"></path>
-                <path d="M1 20v-6h6"></path>
-                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Filtros desplegables -->
-        <div class="toolbar-filters">
-          <div class="filter-item">
-            <label for="filter-hotel" class="filter-label">Hotel</label>
-            <select id="filter-hotel" class="filter-select">
-              <option value="">Todos los hoteles</option>
-            </select>
-          </div>
-
-          <div class="filter-item">
-            <label for="filter-tag" class="filter-label">Etiqueta</label>
-            <select id="filter-tag" class="filter-select">
-              <option value="">Todas las etiquetas</option>
-            </select>
-          </div>
-
-          <div class="filter-item">
-            <label for="filter-status" class="filter-label">Estado</label>
-            <select id="filter-status" class="filter-select">
-              <option value="">Todos los estados</option>
-              <option value="Pendiente">Pendiente</option>
-              <option value="En Revisión">En Revisión</option>
-              <option value="Aprobado">Aprobado</option>
-              <option value="Rechazado">Rechazado</option>
-              <option value="Resuelto">Resuelto</option>
-            </select>
-          </div>
-
-          <div class="filter-reset-wrap">
-            <button type="button" class="btn-text-muted" id="btn-reset-filters">Limpiar filtros</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contenedor Principal de Tarjetas de Solicitudes -->
-      <div class="requests-section">
-        <div class="section-header">
-          <h2 class="section-title" id="section-title">Solicitudes</h2>
-          <span class="count-badge" id="results-count">0 registros</span>
-        </div>
-
-        <div class="requests-grid" id="requests-grid"></div>
-
-        <!-- Estado Vacío -->
-        <div class="empty-state hidden" id="empty-state">
-          <div class="empty-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="9" y1="15" x2="15" y2="15"></line>
-            </svg>
-          </div>
-          <h3 class="empty-title">No se encontraron solicitudes</h3>
-          <p class="empty-desc" id="empty-desc">No hay solicitudes que coincidan con los criterios de búsqueda o tu bandeja se encuentra al día.</p>
-        </div>
-      </div>
-    </section>
+    <!-- IFRAME DEL WEB APP DE GOOGLE APPS SCRIPT -->
+    <iframe 
+      id="oxolegal-frame"
+      class="app-frame"
+      src="https://script.google.com/a/macros/oxohotel.com/s/AKfycbxaBFrZro-3DowLzEWrfm46G07-eQa5R2MCGTGKF-PjXaoyQWDHT_cbZtpB_QbZOszc/exec"
+      allow="clipboard-write; camera; geolocation; microphone"
+      title="OxoLegal Portal"
+    ></iframe>
   </main>
 
-  <!-- ========================================== -->
-  <!-- MODAL 1: NUEVA SOLICITUD (Solo Administrador)-->
-  <!-- ========================================== -->
-  <div class="modal-backdrop hidden" id="modal-new-request" role="dialog" aria-modal="true" aria-labelledby="modal-new-title">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 class="modal-title" id="modal-new-title">Nueva Solicitud Jurídica</h3>
-        <button type="button" class="modal-close-btn" data-close="modal-new-request" aria-label="Cerrar modal">&times;</button>
-      </div>
-
-      <form id="form-new-request" class="modal-body" novalidate>
-        <div class="form-row">
-          <div class="form-group col-half">
-            <label for="new-req-hotel" class="form-label">Hotel *</label>
-            <select id="new-req-hotel" class="form-input" required>
-              <option value="">Seleccione un hotel...</option>
-            </select>
-          </div>
-
-          <div class="form-group col-half">
-            <label for="new-req-tag" class="form-label">Etiqueta / Área *</label>
-            <select id="new-req-tag" class="form-input" required>
-              <option value="">Seleccione una etiqueta...</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="new-req-asunto" class="form-label">Asunto *</label>
-          <input 
-            type="text" 
-            id="new-req-asunto" 
-            class="form-input" 
-            placeholder="Ej. Revisión y firma contrato de arrendamiento" 
-            required
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="new-req-assigned" class="form-label">Asignar Responsable (Correo) *</label>
-          <select id="new-req-assigned" class="form-input" required>
-            <option value="">Seleccione un usuario...</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="new-req-desc" class="form-label">Descripción Detallada</label>
-          <textarea 
-            id="new-req-desc" 
-            class="form-textarea" 
-            rows="4" 
-            placeholder="Detalles sobre antecedentes, compromisos, plazos requeridos o cláusulas específicas..."
-          ></textarea>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-close="modal-new-request">Cancelar</button>
-          <button type="submit" class="btn btn-primary" id="btn-save-new-request">
-            <span class="btn-text">Crear Solicitud</span>
-            <span class="btn-spinner hidden"></span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ========================================== -->
-  <!-- MODAL 2: DETALLES Y GESTIÓN DE SOLICITUD   -->
-  <!-- ========================================== -->
-  <div class="modal-backdrop hidden" id="modal-detail-request" role="dialog" aria-modal="true" aria-labelledby="modal-detail-title">
-    <div class="modal-card modal-lg">
-      <div class="modal-header">
-        <div class="modal-header-info">
-          <span class="badge" id="detail-status-badge">Estado</span>
-          <span class="modal-id-text" id="detail-id-text">ID-SOLICITUD</span>
-        </div>
-        <button type="button" class="modal-close-btn" data-close="modal-detail-request" aria-label="Cerrar modal">&times;</button>
-      </div>
-
-      <div class="modal-body">
-        <h3 class="detail-subject" id="detail-subject">Asunto de la solicitud</h3>
-
-        <div class="detail-metadata-grid">
-          <div class="meta-item">
-            <span class="meta-label">Hotel:</span>
-            <span class="meta-value" id="detail-hotel">-</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Etiqueta:</span>
-            <span class="meta-value" id="detail-tag">-</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Fecha Creación:</span>
-            <span class="meta-value" id="detail-created">-</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Última Actualización:</span>
-            <span class="meta-value" id="detail-updated">-</span>
-          </div>
-        </div>
-
-        <div class="detail-desc-card">
-          <span class="detail-section-title">Descripción Completa:</span>
-          <p class="detail-desc-content" id="detail-desc">-</p>
-        </div>
-
-        <hr class="modal-divider">
-
-        <!-- Formulario de Actualización y Gestión -->
-        <form id="form-manage-request" class="manage-form">
-          <input type="hidden" id="detail-request-id">
-
-          <div class="form-row">
-            <div class="form-group col-half">
-              <label for="detail-edit-status" class="form-label">Estado de la Solicitud</label>
-              <select id="detail-edit-status" class="form-input">
-                <option value="Pendiente">Pendiente</option>
-                <option value="En Revisión">En Revisión</option>
-                <option value="Aprobado">Aprobado</option>
-                <option value="Rechazado">Rechazado</option>
-                <option value="Resuelto">Resuelto</option>
-              </select>
-            </div>
-
-            <div class="form-group col-half" id="group-reassign">
-              <label for="detail-edit-assigned" class="form-label">Responsable Asignado</label>
-              <select id="detail-edit-assigned" class="form-input">
-                <!-- Se llena dinámicamente con usuarios -->
-              </select>
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-close="modal-detail-request">Cerrar</button>
-            <button type="submit" class="btn btn-primary" id="btn-save-detail-status">
-              <span class="btn-text">Guardar Cambios</span>
-              <span class="btn-spinner hidden"></span>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================== -->
-  <!-- MODAL 3: GESTIÓN DE CATÁLOGOS (Admin)      -->
-  <!-- ========================================== -->
-  <div class="modal-backdrop hidden" id="modal-manage-catalogs" role="dialog" aria-modal="true">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 class="modal-title">Gestión de Catálogos</h3>
-        <button type="button" class="modal-close-btn" data-close="modal-manage-catalogs">&times;</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="tabs-nav">
-          <button type="button" class="tab-btn active" data-tab="tab-hoteles">Hoteles</button>
-          <button type="button" class="tab-btn" data-tab="tab-etiquetas">Etiquetas</button>
-        </div>
-
-        <div class="tab-content active" id="tab-hoteles">
-          <div class="add-catalog-form">
-            <input type="text" id="new-hotel-input" class="form-input" placeholder="Nombre nuevo hotel (ej. Grand Hyatt)">
-            <button type="button" class="btn btn-primary btn-sm" id="btn-add-hotel">Agregar</button>
-          </div>
-          <div class="catalog-list" id="hoteles-list"></div>
-        </div>
-
-        <div class="tab-content hidden" id="tab-etiquetas">
-          <div class="add-catalog-form">
-            <input type="text" id="new-tag-input" class="form-input" placeholder="Nueva etiqueta (ej. Tributario)">
-            <button type="button" class="btn btn-primary btn-sm" id="btn-add-tag">Agregar</button>
-          </div>
-          <div class="catalog-list" id="etiquetas-list"></div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-close="modal-manage-catalogs">Finalizar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================== -->
-  <!-- MODAL 4: CONFIGURACIÓN DE CONEXIÓN API      -->
-  <!-- ========================================== -->
-  <div class="modal-backdrop hidden" id="modal-api-config" role="dialog" aria-modal="true">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 class="modal-title">Conexión Google Apps Script</h3>
-        <button type="button" class="modal-close-btn" data-close="modal-api-config">&times;</button>
-      </div>
-
-      <div class="modal-body">
-        <p class="modal-help-text">
-          Permite vincular o modificar la URL del Web App de Google Apps Script.
-        </p>
-
-        <div class="form-group">
-          <label for="config-api-url" class="form-label">URL del Web App</label>
-          <input 
-            type="url" 
-            id="config-api-url" 
-            class="form-input" 
-            placeholder="https://script.google.com/macros/s/.../exec"
-          >
-        </div>
-
-        <div class="api-status-box" id="api-status-box">
-          <span class="api-status-dot"></span>
-          <span class="api-status-text" id="api-status-text">Verificando estado...</span>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-close="modal-api-config">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="btn-save-api-config">Guardar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTENEDOR DE NOTIFICACIONES FLOTANTES (TOAST) -->
-  <div class="toast-container" id="toast-container" aria-live="polite"></div>
-
-  <!-- Scripts para GitHub Pages (PWA) -->
-  <script type="module" src="app.js"></script>
-
-  <!-- Scripts Modulares para Google Apps Script -->
-  <?!= include('js_config'); ?>
-  <?!= include('js_storage'); ?>
-  <?!= include('js_api'); ?>
-  <?!= include('js_ui'); ?>
-  <?!= include('js_views'); ?>
-  <?!= include('js_app'); ?>
-
-  <!-- Registro de Service Worker para PWA Móvil -->
   <script>
+    // Gestión del Splash Screen con desvanecimiento suave al cargar el iframe
+    const frame = document.getElementById('oxolegal-frame');
+    const splash = document.getElementById('splash-screen');
+
+    if (frame && splash) {
+      frame.addEventListener('load', () => {
+        setTimeout(() => {
+          splash.classList.add('fade-out');
+        }, 300);
+      });
+
+      // Timeout de seguridad por si la red retrasa el evento load
+      setTimeout(() => {
+        if (!splash.classList.contains('fade-out')) {
+          splash.classList.add('fade-out');
+        }
+      }, 5000);
+    }
+
+    // Registro de Service Worker para PWA Instalable
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js', { scope: './' })
@@ -537,31 +294,40 @@
       });
     }
 
-    // Manejador del evento beforeinstallprompt para instalación nativa
+    // Captura del evento beforeinstallprompt para instalación nativa
     let pwaInstallPrompt = null;
+    const installBar = document.getElementById('pwa-install-bar');
+    const installBtn = document.getElementById('btn-pwa-install');
+    const dismissBtn = document.getElementById('btn-dismiss-install');
+
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       pwaInstallPrompt = e;
-      console.log('[PWA] Evento beforeinstallprompt capturado con éxito.');
-      const installBtn = document.getElementById('btn-pwa-install');
-      if (installBtn) {
-        installBtn.classList.remove('hidden');
-        installBtn.addEventListener('click', async () => {
-          if (!pwaInstallPrompt) return;
-          pwaInstallPrompt.prompt();
-          const choice = await pwaInstallPrompt.userChoice;
-          console.log('[PWA] Elección del usuario:', choice.outcome);
-          pwaInstallPrompt = null;
-          installBtn.classList.add('hidden');
-        });
-      }
+      console.log('[PWA] Evento beforeinstallprompt capturado en contenedor PWA.');
+      if (installBar) installBar.classList.add('visible');
     });
+
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (!pwaInstallPrompt) return;
+        pwaInstallPrompt.prompt();
+        const choice = await pwaInstallPrompt.userChoice;
+        console.log('[PWA] Elección del usuario:', choice.outcome);
+        pwaInstallPrompt = null;
+        if (installBar) installBar.classList.remove('visible');
+      });
+    }
+
+    if (dismissBtn) {
+      dismissBtn.addEventListener('click', () => {
+        if (installBar) installBar.classList.remove('visible');
+      });
+    }
 
     window.addEventListener('appinstalled', () => {
       console.log('[PWA] OxoLegal instalado satisfactoriamente.');
       pwaInstallPrompt = null;
-      const installBtn = document.getElementById('btn-pwa-install');
-      if (installBtn) installBtn.classList.add('hidden');
+      if (installBar) installBar.classList.remove('visible');
     });
   </script>
 

@@ -10,6 +10,24 @@
   "theme_color": "#12172B",
   "icons": [
     {
+      "src": "https://acabrales-oxohotel.github.io/OxoLegal/media/OxoLegal-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://acabrales-oxohotel.github.io/OxoLegal/media/OxoLegal-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://acabrales-oxohotel.github.io/OxoLegal/media/OxoLegal-logo.png",
+      "sizes": "499x499",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
       "src": "media/OxoLegal-logo.png",
       "sizes": "192x192",
       "type": "image/png",
@@ -18,12 +36,6 @@
     {
       "src": "media/OxoLegal-logo.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "media/OxoLegal-logo.png",
-      "sizes": "499x499",
       "type": "image/png",
       "purpose": "any"
     }

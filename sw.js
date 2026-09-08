@@ -7,7 +7,7 @@
  * - Estrategia Network First (con fallback a caché) para consultas a la API de GAS.
  */
 
-const CACHE_NAME = 'oxolegal-core-v3';
+const CACHE_NAME = 'oxolegal-core-v4';
 
 // Recursos esenciales que se precargan durante la instalación
 const STATIC_ASSETS = [

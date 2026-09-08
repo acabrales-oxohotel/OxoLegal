@@ -1,13 +1,26 @@
 /**
  * ============================================================================
- * OXOLEGAL - MEDIA QUERIES Y RESPONSIVIDAD MOBILE-FIRST
+ * OXOLEGAL - REGLAS RESPONSIVE Y ADAPTABILIDAD MÓVIL (LEYES DE UX)
  * ============================================================================
  */
 
-/* Tablets y Móviles (Menos de 768px) */
+/* Pantallas medianas y Tablets (<= 992px) */
+@media (max-width: 992px) {
+  .toolbar-filters {
+    grid-template-columns: repeat(2, 1fr) auto;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Tablets y Smartphones apaisados (<= 768px) */
 @media (max-width: 768px) {
   .header-container {
     padding: 0.65rem 1rem;
+    height: auto;
+    min-height: 56px;
   }
 
   .brand-title {
@@ -19,7 +32,7 @@
   }
 
   .user-name {
-    display: none; /* Dejar solo el badge del rol para ahorrar espacio */
+    display: none;
   }
 
   .main-content {
@@ -29,22 +42,29 @@
   .toolbar-top {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.75rem;
   }
 
   .search-input-wrap {
     max-width: 100%;
+    width: 100%;
   }
 
   .toolbar-actions {
+    width: 100%;
     justify-content: flex-end;
+    gap: 0.5rem;
   }
 
   .toolbar-filters {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
   }
 
   .filter-reset-wrap {
-    text-align: right;
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .requests-grid {
@@ -68,40 +88,81 @@
   }
 }
 
-/* Móviles pequeños (Menos de 480px) */
-@media (max-width: 480px) {
-  .modal-card {
-    max-height: 95vh;
+/* Smartphones pequeños y modo vertical (<= 520px) */
+@media (max-width: 520px) {
+  .header-actions {
+    gap: 0.35rem;
   }
 
-  .modal-header {
-    padding: 1rem;
+  .toolbar-filters {
+    grid-template-columns: 1fr;
   }
 
-  .modal-body {
-    padding: 1rem;
+  .filter-reset-wrap {
+    grid-column: span 1;
+    width: 100%;
   }
 
-  .btn {
-    padding: 0.55rem 1rem;
-    font-size: 0.825rem;
+  .filter-reset-wrap .btn {
+    width: 100%;
+  }
+
+  .toolbar-actions {
+    flex-wrap: wrap;
+  }
+
+  .toolbar-actions .btn {
+    flex: 1;
+  }
+
+  .toolbar-actions .btn-icon-only {
+    flex: 0 0 42px;
   }
 
   .metrics-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.65rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
   }
 
   .metric-card {
     padding: 0.85rem;
   }
 
+  .metric-label {
+    font-size: 0.7rem;
+  }
+
   .metric-value {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .modal-card {
+    max-height: 94vh;
+    border-radius: var(--radius-md);
+  }
+
+  .modal-lg {
+    height: 92vh;
+  }
+
+  .modal-header {
+    height: 56px;
+    min-height: 56px;
+    padding: 0 1rem;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .modal-footer {
+    height: 60px;
+    min-height: 60px;
+    padding: 0 1rem;
   }
 }
 
-/* Pantallas Ultra-Anchas (> 2000px) */
+/* Pantallas Ultra Anchas */
 @media (min-width: 2000px) {
   .header-container, .main-content {
     max-width: 1800px;
