@@ -80,6 +80,13 @@
   margin-bottom: 1.25rem;
 }
 
+.search-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
 .search-input-wrap {
   position: relative;
   flex: 1;
@@ -115,6 +122,14 @@
   background-color: var(--color-surface);
   border-color: var(--color-accent);
   box-shadow: 0 0 0 3px var(--color-accent-subtle);
+}
+
+.btn-refresh {
+  flex-shrink: 0;
+  width: var(--height-control, 42px);
+  height: var(--height-control, 42px);
+  min-width: var(--height-control, 42px);
+  min-height: var(--height-control, 42px);
 }
 
 .toolbar-actions {

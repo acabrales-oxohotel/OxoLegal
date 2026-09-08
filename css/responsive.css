@@ -87,15 +87,27 @@ html, body {
     gap: 0.75rem;
   }
 
-  .search-input-wrap {
-    max-width: 100%;
+  .search-group {
     width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .search-input-wrap {
+    flex: 1;
+    width: auto;
   }
 
   .toolbar-actions {
     width: 100%;
-    justify-content: flex-end;
+    display: flex;
     gap: 0.5rem;
+  }
+
+  .toolbar-actions .btn {
+    flex: 1;
+    min-height: var(--height-control, 42px);
   }
 
   .toolbar-filters {
@@ -186,16 +198,14 @@ html, body {
   }
 
   .toolbar-actions {
-    flex-wrap: wrap;
-    gap: 0.4rem;
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
   }
 
   .toolbar-actions .btn {
     flex: 1;
-  }
-
-  .toolbar-actions .btn-icon-only {
-    flex: 0 0 42px;
+    min-height: var(--height-control, 42px);
   }
 
   .metrics-grid {
